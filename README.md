@@ -6,7 +6,9 @@
 
 Discover Instagram posts from any public profile with advanced filtering. Filter by date range, post type (Post or Reel), post count, and exclude specific posts — all through a single Python class backed by Bright Data's infrastructure.
 
-No headless browsers. No proxies to manage. No CAPTCHAs. Just structured post data at **$0.0015/record** with ~1 second response times.
+No headless browsers. No proxies to manage. No CAPTCHAs. Just structured post data at **$0.0015/record**.
+
+> **Related scrapers:** [Instagram Profile Discovery](https://github.com/nicobailon/bright-data-instagram-profile-discovery) · [Instagram Reels Discovery](https://github.com/nicobailon/bright-data-instagram-reels-discovery) · [Instagram Reels (All) Discovery](https://github.com/nicobailon/bright-data-instagram-reels-all-discovery)
 
 ---
 
@@ -165,4 +167,4 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 
 ---
 
-*This project uses Bright Data's Instagram datasets. [Sign up for a free trial](https://get.brightdata.com/1tndi4600b25) to get your API token.*
+*This repository is a community project and is not officially affiliated with Instagram or Meta. It uses the [Bright Data](https://get.brightdata.com/1tndi4600b25) API to access publicly available data. Some links in this README are affiliate links — if you sign up through them, I may earn a commission at no extra cost to you.*

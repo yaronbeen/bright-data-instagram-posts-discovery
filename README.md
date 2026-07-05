@@ -8,7 +8,7 @@ Discover Instagram posts from any public profile with advanced filtering. Filter
 
 No headless browsers. No proxies to manage. No CAPTCHAs. Just structured post data at **$0.0015/record**.
 
-> **Related scrapers:** [Instagram Profile Discovery](https://github.com/nicobailon/bright-data-instagram-profile-discovery) · [Instagram Reels Discovery](https://github.com/nicobailon/bright-data-instagram-reels-discovery) · [Instagram Reels (All) Discovery](https://github.com/nicobailon/bright-data-instagram-reels-all-discovery)
+> **All Instagram scrapers:** [Profile Scraper](https://github.com/yaronbeen/bright-data-instagram-profile-scraper) · [Profile Discovery](https://github.com/yaronbeen/bright-data-instagram-profile-discovery) · [Posts Scraper](https://github.com/yaronbeen/bright-data-instagram-posts-scraper) · **[Posts Discovery](https://github.com/yaronbeen/bright-data-instagram-posts-discovery)** · [Reels Scraper](https://github.com/yaronbeen/bright-data-instagram-reels-scraper) · [Reels Discovery](https://github.com/yaronbeen/bright-data-instagram-reels-discovery) · [Reels (All) Discovery](https://github.com/yaronbeen/bright-data-instagram-reels-all-discovery) · [Comments Scraper](https://github.com/yaronbeen/bright-data-instagram-comments-scraper)
 
 ---
 
@@ -23,15 +23,23 @@ No headless browsers. No proxies to manage. No CAPTCHAs. Just structured post da
 - **40 output fields** — Full post metadata including likes, comments, hashtags, media URLs, location, and more
 - **Built-in error handling** — Typed exceptions for auth, validation, and network errors
 
+## Use Cases
+
+- Pull a brand's latest posts to analyze content strategy
+- Track competitor posting frequency within a date range
+- Build a content calendar from historical post data
+- Filter for only Reels or only Posts from a mixed feed
+- Exclude already-processed posts to avoid duplicate work
+
 ## Prerequisites
 
 - Python 3.8 or higher
-- A Bright Data API token — [Get one here](https://get.brightdata.com/1tndi4600b25)
+- A Bright Data API token
 
 ## Installation
 
 ```bash
-git clone https://github.com/nicobailon/bright-data-instagram-posts-discovery.git
+git clone https://github.com/yaronbeen/bright-data-instagram-posts-discovery.git
 cd bright-data-instagram-posts-discovery
 pip install -r requirements.txt
 ```
@@ -58,7 +66,7 @@ scraper = InstagramPostsDiscovery()
 
 # Discover the latest 10 posts from a profile
 results = scraper.discover_by_profile(
-    "https://www.instagram.com/meta/",
+    "https://www.instagram.com/wild.trail.runs/",
     num_of_posts=10,
 )
 print(results)
@@ -82,15 +90,15 @@ Discover posts from one or more Instagram profiles.
 
 ```python
 # 1. URL string with keyword filters
-scraper.discover_by_profile("https://www.instagram.com/meta/", num_of_posts=10)
+scraper.discover_by_profile("https://www.instagram.com/wild.trail.runs/", num_of_posts=10)
 
 # 2. Single dict
-scraper.discover_by_profile({"url": "https://www.instagram.com/meta/", "num_of_posts": 10})
+scraper.discover_by_profile({"url": "https://www.instagram.com/wild.trail.runs/", "num_of_posts": 10})
 
 # 3. List of dicts (batch)
 scraper.discover_by_profile([
-    {"url": "https://www.instagram.com/meta/", "num_of_posts": 5},
-    {"url": "https://www.instagram.com/google/", "num_of_posts": 5},
+    {"url": "https://www.instagram.com/wild.trail.runs/", "num_of_posts": 5},
+    {"url": "https://www.instagram.com/ceramics_by_jun/", "num_of_posts": 5},
 ])
 ```
 
@@ -111,19 +119,21 @@ scraper.discover_by_profile([
 ```json
 [
   {
-    "url": "https://www.instagram.com/p/ABC123/",
-    "user_posted": "meta",
-    "description": "Introducing our latest AI tools for creators...",
-    "hashtags": ["#AI", "#Creators", "#Meta"],
-    "num_comments": 1523,
-    "date_posted": "2025-02-15T14:30:00.000Z",
-    "likes": 48210,
-    "photos": ["https://instagram.com/photo1.jpg"],
+    "url": "https://www.instagram.com/p/C7xK9mNs2Qr/",
+    "user_posted": "wild.trail.runs",
+    "description": "Summit push at 4am. Worth every frozen step.",
+    "hashtags": ["#trailrunning", "#ultramarathon", "#mountains"],
+    "num_comments": 87,
+    "date_posted": "2025-03-11T06:45:00.000Z",
+    "likes": 2341,
+    "photos": ["https://instagram.com/trail_summit.jpg"],
     "videos": [],
-    "location": "Menlo Park, California"
+    "location": "Chamonix, France"
   }
 ]
 ```
+
+> Note: This is a representative example. Actual field values and available fields may vary.
 
 ## Output Fields
 
@@ -142,15 +152,24 @@ The API returns up to 40 fields per post. Key fields include:
 | `videos` | `list` | Video URLs |
 | `location` | `str` | Tagged location name |
 
+## Rate Limits
+
+- **Sync mode:** Results returned directly in the response. Best for small batches (1-10 inputs).
+- **Async mode:** For larger jobs, use the async API. See [Bright Data API docs](https://docs.brightdata.com/datasets/functions/introduction).
+- **No hard rate limit** on API calls, but performance varies with batch size.
+- **Pricing:** $0.0015 per record ($1.50 per 1,000 records).
+
 ## Why Bright Data?
 
 Bright Data's Instagram datasets handle the hard parts of Instagram data collection so you don't have to:
 
-- **No infrastructure to manage** — Skip the headless browsers, proxy pools, and CAPTCHA solvers
-- **Reliable at scale** — Battle-tested infrastructure handles rate limits and blocks automatically
-- **Structured data** — Get clean, typed JSON instead of parsing raw HTML
-- **Compliance built in** — Data collection follows platform terms and privacy regulations
-- **Pay per record** — $0.0015/record with no minimum commitment
+- **Date range filtering** lets you pull exactly the time window you need
+- **Post type filter** separates Posts from Reels in mixed feeds
+- **Exclusion lists** prevent re-processing posts you already have
+- **Batch multiple profiles** in a single API call for efficient pipeline builds
+- **Compliance built in** — data collection follows platform terms and privacy regulations
+
+For full API documentation, see the [Bright Data API Reference](https://docs.brightdata.com/datasets/functions/introduction).
 
 [Get started with Bright Data](https://get.brightdata.com/1tndi4600b25)
 
@@ -167,4 +186,4 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 
 ---
 
-*This repository is a community project and is not officially affiliated with Instagram or Meta. It uses the [Bright Data](https://get.brightdata.com/1tndi4600b25) API to access publicly available data. Some links in this README are affiliate links — if you sign up through them, I may earn a commission at no extra cost to you.*
+*This repository is a community project and is not officially affiliated with Instagram or Meta. It uses the Bright Data API to access publicly available data. Some links in this README are affiliate links — if you sign up through them, I may earn a commission at no extra cost to you.*
